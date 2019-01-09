@@ -44,7 +44,11 @@ end
 
 if ~exist(filename)
 	disp(['Downloading ' title ' archive.']);
-	urlwrite(fileurl,filename);
+	try
+		websave(filename,fileurl);    % Matlab recommends using websave here.
+	catch
+		urlwrite(fileurl,filename);   % No websave? Use urlwrite instead.
+	end
 	disp('...done.');
 else
 	disp(['Using local copy of ' title ' archive.'])
